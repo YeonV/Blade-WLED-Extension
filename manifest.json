@@ -1,0 +1,31 @@
+{
+  "name": "Blade's WLED Extension",
+  "description": "Blade's WLED API Tester",
+  "version": "0.6.1",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "declarativeContent",
+    "storage",
+    "<all_urls>"
+  ],
+  "content_security_policy": "script-src 'self' ; object-src 'self';",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false,
+    "matches": ["*://*.*.*/*"]
+  },
+  "browser_action": {
+    "default_title": "Blade's WLED Extension",
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "64": "assets/icon64.png",
+    "128": "assets/icon128.png",
+    "160": "assets/icon160.png"
+  },
+  "manifest_version": 2
+}

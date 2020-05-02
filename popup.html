@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Blade's WLED API Tester</title>
+    <link rel="stylesheet" href="assets/main.css" />
+    <link rel="stylesheet" href="assets/font.css" />
+    <link rel="stylesheet" href="assets/all.min.css" />
+  </head>
+  <body>
+    <div id="menu">
+      <div class="menu-placeholder"></div>
+      <div id="http" class="menu-item active">HTTP</div>
+      <div id="json" class="menu-item">JSON</div>
+      <div id="settings" class="menu-item">Settings</div>
+      <div class="menu-placeholder rest">Blade's API-Tester v0.6.1</div>
+    </div>
+    <div id="extension" class="scroll4">
+      <span id="dev-toggler" class="floating-button"
+        ><i class="fa-fw fas fa-cog  "></i
+      ></span>
+
+      <div id="export" class="dev floating-button">
+        <i class="fa-fw fas fa-file-download  "></i
+        ><span style="font-size: 10px;">config</span>
+      </div>
+      <div class="container">
+        <div class="globals-wrapper">
+          <li>&nbsp;</li>
+          <input
+            type="text"
+            placeholder="Your WLED-IP or mDNS-Name"
+            value=""
+            class="globalInput"
+            id="inputIP"
+          /><button class="save dev">
+            <i style="font-size: 1rem" class="fa-fw fas fa-save"></i>
+            template
+          </button>
+        </div>
+        <div class="globals-wrapper http">
+          <input
+            type="text"
+            class="globalInput"
+            placeholder="Find effects..."
+            value=""
+            id="searchInput"
+          />
+        </div>
+
+        <div id="effectlist" class="http">
+          Loading...
+        </div>
+        <div class="dev2">
+          <button style="width: 100%;" id="json-get-current">
+            GET current State to Textarea
+          </button>
+          <button style="width: 100%;" id="dev-button4" class="button">
+            SET new State from Textarea
+          </button>
+          <textarea id="currentState" class="scroll4"></textarea>
+        </div>
+      </div>
+
+      <iframe id="hiddenFrame" name="hiddenFrame"></iframe>
+      <script src="assets/jquery.js"></script>
+      <script src="config.js"></script>
+      <script src="assets/utils.js"></script>
+      <script src="assets/jsonapi.js"></script>
+      <script src="assets/main.js"></script>
+    </div>
+  </body>
+</html>
