@@ -1,5 +1,24 @@
 # Blade-WLED-Extension v0.6.1
 
+![Image description](Blade-WLED-Extension.png)
+
+| \#  | Function                      |
+| --- | ----------------------------- |
+| 1   | HTTP-API-Tester               |
+| 2   | JSON-API-Tester               |
+| 3   | Toggle Settings               |
+| 4   | Save Template                 |
+| 5   | Modify Template               |
+| 6   | Current effect countdown      |
+| 7   | Current effect active state   |
+| 8   | WLED Online/Offline state     |
+| 9   | Live Search Effects           |
+| 10  | Delete this effect            |
+| 11  | Share this effect on WLED-CMS |
+| 12  | Save current config.js\*      |
+
+\* until storage is handled via extension, the config.js needs to be replaced
+
 ### Why v0.6.1?
 
 | Description                         | Version |

@@ -89,7 +89,7 @@ const renderEffectList = (effectList, filterString) => {
                 ? ''
                 : effectList[e].name === 'sunrise'
                 ? ''
-                : '<div  class="deleteButton dev"><i class="icons">&#xe037;</i></div><div  class="shareButton dev"><i class="icons">&#xe116;</i></div>'
+                : '<div  class="deleteButton dev"><i class="icons">&#xe037;</i></div><div  class="shareButton dev"><i class="fa-fw fas fa-share-alt"></i></div>'
             }
             
             <div  class="settingsButton">
