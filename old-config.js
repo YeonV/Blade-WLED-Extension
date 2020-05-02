@@ -1,53 +1,33 @@
 const effects = {
-  "sunrise": {
-    "name": "sunrise",
-    "fx": 0,
-    "fp": 0,
-    "ix": 128,
-    "fxSpeed": 128,
-    "extra": "&NF=2",
-    "colorOne": "FF0000",
-    "colorTwo": "FFB14A",
-    "timeInMin": 10,
-    "brightnessStart": 5,
-    "brightnessEnd": 255,
-    "urlString": "http://192.168.1.186/win&FX=0&CL=h00FF0000&C2=h00FFB14A&A=5&NL=10&NT=255&NF=2",
-    "useFX": true,
-    "useSX": false,
-    "useCL": true,
-    "useC2": true,
-    "useA": true,
-    "useNL": true,
-    "useNT": true,
-    "useFP": false,
-    "useIX": false,
-    "useEXTRA": true
-  },
-  "sveny": {
-    "name": "sveny",
-    "colorOne": "FF00FF",
-    "colorTwo": "8000FF",
-    "timeInMin": "1",
-    "brightnessStart": 5,
-    "brightnessEnd": 255,
-    "urlString": "http://192.168.1.186/win&FX=0&SX=128&CL=h00FF00FF&C2=h008000FF&A=5&NL=1&NT=255&FP=0&IX=128&NF=2",
-    "fx": 0,
-    "fxSpeed": 128,
-    "extra": "&NF=2",
-    "useCL": true,
-    "useA": true,
-    "useC2": true,
-    "useNT": true,
-    "useFX": true,
-    "useFP": true,
-    "useIX": true,
-    "useSX": true,
-    "useEXTRA": true
+  sunrise: {
+    name: "sunrise",
+    fx: 0,
+    fp: 0,
+    ix: 128,
+    fxSpeed: 128,
+    extra: "&NF=2",
+    colorOne: "FF0000",
+    colorTwo: "FFB14A",
+    timeInMin: 10,
+    brightnessStart: 5,
+    brightnessEnd: 255,
+    urlString:
+      "http://192.168.1.186/win&FX=0&CL=h00FF0000&C2=h00FFB14A&A=5&NL=10&NT=255&NF=2",
+    useFX: true,
+    useSX: false,
+    useCL: true,
+    useC2: true,
+    useA: true,
+    useNL: true,
+    useNT: true,
+    useFP: false,
+    useIX: false,
+    useEXTRA: true
   }
 };
-  const globals = {
-    "ip": "192.168.1.186",
-    "wledPalettes": [
+const globals = {
+  ip: "192.168.1.186",
+  wledPalettes: [
     "Default",
     "Random Cycle",
     "Primary Color",
@@ -99,8 +79,8 @@ const effects = {
     "C9",
     "Sakura",
     "Aurora"
-],
-    "wledEffects": [
+  ],
+  wledEffects: [
     "Solid",
     "Blink",
     "Breathe",
@@ -202,4 +182,5 @@ const effects = {
     "Percent",
     "Ripple Rainbow",
     "Heartbeat"
-]}
+  ]
+};
