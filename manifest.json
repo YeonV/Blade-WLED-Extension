@@ -1,7 +1,7 @@
 {
   "name": "Blade's WLED Extension",
   "description": "Blade's WLED API Tester",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "permissions": [
     "activeTab",
     "tabs",
