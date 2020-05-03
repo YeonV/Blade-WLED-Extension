@@ -5,7 +5,9 @@ const template = {
     fp: 0,
     ix: 128,
     fxSpeed: 128,
-    extra: '&NF=2',
+    nf: 2,
+    c3: '000000',
+    extra: '',
     colorOne: 'FF0000',
     colorTwo: 'FFB14A',
     timeInMin: 10,
@@ -21,6 +23,8 @@ const template = {
     useNT: true,
     useFP: true,
     useIX: true,
+    useNF: true,
+    useC3: false,
     useEXTRA: true
   }
 };
@@ -44,6 +48,8 @@ const setURLonEffect = (effect, el) => {
       ? `&C2=h00${effectsyz[effect.name].colorTwo}`
       : ``
   }${
+    effectsyz[effect.name].useC3 ? `&C3=h00${effectsyz[effect.name].c3}` : ``
+  }${
     effectsyz[effect.name].useA
       ? `&A=${effectsyz[effect.name].brightnessStart}`
       : ``
@@ -55,9 +61,11 @@ const setURLonEffect = (effect, el) => {
     effectsyz[effect.name].useNT
       ? `&NT=${effectsyz[effect.name].brightnessEnd}`
       : ``
-  }${effectsyz[effect.name].useFP ? `&FP=${effectsyz[effect.name].fp}` : ``}${
-    effectsyz[effect.name].useIX ? `&IX=${effectsyz[effect.name].ix}` : ``
-  }${effectsyz[effect.name].useEXTRA ? `${effectsyz[effect.name].extra}` : ``}`;
+  }${effectsyz[effect.name].useNF ? `&NT=${effectsyz[effect.name].nf}` : ``}${
+    effectsyz[effect.name].useFP ? `&FP=${effectsyz[effect.name].fp}` : ``
+  }${effectsyz[effect.name].useIX ? `&IX=${effectsyz[effect.name].ix}` : ``}${
+    effectsyz[effect.name].useEXTRA ? `${effectsyz[effect.name].extra}` : ``
+  }`;
 
   $('.url', el)[0].innerText = effectsyz[effect.name].urlString;
   $('.url', el)[0].href = effectsyz[effect.name].urlString;
@@ -67,23 +75,22 @@ const setURLonEffect = (effect, el) => {
 };
 
 const renderEffectList = (effectList, filterString) => {
-  $('#effectlist')[0].innerHTML = (filterString
-    ? Object.keys(effectList)
-        .filter(p => p.toLowerCase() !== 'template')
-        .filter(p => p.toLowerCase().includes(filterString.toLowerCase()))
-    : Object.keys(effectList)
-  )
-    .map(
-      (e, i) => /*html*/ `   
+  if ($('#effectlist') && $('#effectlist').length > 0) {
+    $('#effectlist')[0].innerHTML = (filterString
+      ? Object.keys(effectList)
+          .filter(p => p.toLowerCase() !== 'template')
+          .filter(p => p.toLowerCase().includes(filterString.toLowerCase()))
+      : Object.keys(effectList)
+    )
+      .map(
+        (e, i) => /*html*/ `   
             <div class="effect ${
               effectList[e].name === 'template' ? 'template dev' : ''
             }">
           <div class="title">
-            <a class="title-url" target="hiddenFrame" href="http://${
-              globals.ip
-            }/${effectList[e].urlString}">${
-        effectList[e].name
-      }<span class="countdown"></span></a>      
+            <a class="title-url" target="hiddenFrame" href="${
+              effectList[e].urlString
+            }">${effectList[e].name}<span class="countdown"></span></a>      
             ${
               effectList[e].name === 'template'
                 ? ''
@@ -108,16 +115,66 @@ const renderEffectList = (effectList, filterString) => {
               </div>
             <div class="settings-row">
               <div class="settings-row-group floating mw205">
-                <label class="floating">From</label>
+                <label class="floating">Color1</label>
                 
                 <i class="icons ${
                   effectList[e].useCL ? 'active' : ''
                 } cl" style="margin-right: 0.5rem">&#xe2b3;</i>
         
                 
-                <input class="colorPickerOne" type="color" value="#${
-                  effectList[e].colorOne
-                }" />
+                <input class="colorPickerOne" type="color" value="#${effectList[
+                  e
+                ].colorOne || '000000'}" />
+              
+              </div>
+              <div class="settings-row-group floating mw205">
+                <label class="floating">Color2</label>
+                <i class="icons ${
+                  effectList[e].useC2 ? 'active' : ''
+                } c2" style="margin-right: 0.5rem">&#xe2b3;</i>
+                <input class="colorPickerTwo" type="color" value="#${effectList[
+                  e
+                ].colorTwo || '000000'}" />
+               
+              </div>
+              <div class="settings-row-group floating mw205">
+                <label class="floating">Color3</label>
+                <i class="icons ${
+                  effectList[e].useC3 ? 'active' : ''
+                } c3" style="margin-right: 0.5rem">&#xe2b3;</i>
+                <input class="colorPickerTwo" type="color" value="#${effectList[
+                  e
+                ].c3 || '000000'}" />                
+              </div>
+              <div class="settings-row-group floating" style="flex: 1">
+                <label class="floating">Extra:</label>
+                <i class="icons ${
+                  effectList[e].useEXTRA ? 'active' : ''
+                } extra" style="margin-right: 0.5rem">&#xe23d;</i>
+                <input class="extra " type="text"  value="${
+                  effectList[e].extra
+                }" style="flex: 1" />
+              </div> 
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-group floating wrap slim">
+                <label class="floating">Nightlight:</label>
+                <div>
+                  <i class="icons ${
+                    effectList[e].useNF ? 'active' : ''
+                  } nf fas fa-fw fa-moon" style="margin-right: 0.5rem"></i>              
+                  <input
+                        style='width: 60px;'
+                        class='nf'
+                        min='0'
+                        max='2'
+                        type='number'
+                        value='${effectList[e].nf || 2}'
+                      />                   
+                </div>
+              </div>
+              <div class="settings-row-group floating mw205">
+                <label class="floating">Start</label>
                 <i class="icons ${
                   effectList[e].useA ? 'active' : ''
                 } brightnessA" style="margin-left: 1rem;margin-right: 0.5rem;">&#xe2a6;</i>
@@ -126,136 +183,124 @@ const renderEffectList = (effectList, filterString) => {
                   type="range"
                   min="0"
                   max="255"
-                  value="${effectList[e].brightnessStart}"
+                  value="${effectList[e].brightnessStart || 255}"
                 />
               </div>
               <div class="settings-row-group floating mw205">
-                <label class="floating">To</label>
+                <label class="floating">End</label>              
                 <i class="icons ${
-                  effectList[e].useC2 ? 'active' : ''
-                } c2" style="margin-right: 0.5rem">&#xe2b3;</i>
-                <input class="colorPickerTwo" type="color" value="#${
-                  effectList[e].colorTwo
-                }" />
-               <i class="icons ${
-                 effectList[e].useNT ? 'active' : ''
-               } brightnessB" style="margin-left: 1rem;margin-right: 0.5rem;">&#xe2a6;</i>
-                <input
-                  class="brightEnd"
-                  type="range"
-                  min="0"
-                  max="255"
-                  value="${effectList[e].brightnessEnd}"
-                />
-              </div>
-              <div class="settings-row-group floating mw205">
-                <label class="floating">Time in Min</label>
-                <i class="icons ${
-                  effectList[e].useNL ? 'active' : ''
-                } nl" style="margin-right: 0.5rem">&#xe325;</i>
-                <input class="time" type="range" min="1" max="120" value="${
-                  effectList[e].timeInMin
-                }" />
-              </div>
-              
-            </div>
-            <div class="settings-row">
-              <div class="settings-row-group floating wrap">
-                <label class="floating">FX:</label>
-                <div>
+                  effectList[e].useNT ? 'active' : ''
+                } brightnessB" style="margin-left: 1rem;margin-right: 0.5rem;">&#xe2a6;</i>
+                  <input
+                    class="brightEnd"
+                    type="range"
+                    min="0"
+                    max="255"
+                    value="${effectList[e].brightnessEnd || 0}"
+                  />
+                </div>
+                <div class="settings-row-group floating mw205 slim">
+                  <label class="floating">Time in Min</label>
                   <i class="icons ${
-                    effectList[e].useFX ? 'active' : ''
-                  } fx" style="margin-right: 0.5rem">&#xe410;</i>
-                  
+                    effectList[e].useNL ? 'active' : ''
+                  } nl" style="margin-right: 0.5rem">&#xe325;</i>
+                    <input class="time" type="range" min="1" max="120" value="${effectList[
+                      e
+                    ].timeInMin || 1}" />
+                  </div>              
+                </div>
+            
+              <div class="settings-row">
+                <div class="settings-row-group floating wrap slim">
+                  <label class="floating">FX:</label>
+                  <div>
+                    <i class="icons ${
+                      effectList[e].useFX ? 'active' : ''
+                    } fx fas fa-fw fa-magic" style="margin-right: 0.5rem"></i>
+                    
+                    ${
+                      globals.wledEffects && globals.wledEffects.length > 1
+                        ? `<select id='fxList' class='fx' value='${
+                            effectList[e].fx
+                          }'>
+                        ${globals.wledEffects.map(
+                          (e, i) => `
+                        <option value='${i}'>${e}</option>
+                        `
+                        )}
+                          
+                        </select>`
+                        : `<input
+                          style='width: 60px;'
+                          class='fx'
+                          min='0'
+                          max='150'
+                          type='number'
+                          value='${effectList[e].fx || 0}'
+                        />
+                      `
+                    }
+                  </div>
+                  <div>
+                    <i class="icons ${
+                      effectList[e].useSX ? 'active' : ''
+                    } sx ml1" style="margin-right: 0.5rem;">&#xe325;</i>
+                    <input
+                      class="fxSpeed"
+                      type="range"
+                      min="0"
+                      max="255"
+                      value="${effectList[e].fxSpeed || 128}"
+                    />
+                  </div>
+                  <div>
+                    <i class="icons ${
+                      effectList[e].useIX ? 'active' : ''
+                    } ix ml1" style="margin-right: 0.5rem;">&#xe409;</i>
+                    <input
+                      class="ix"
+                      type="range"
+                      min="0"
+                      max="255"
+                      value="${effectList[e].ix || 128}"
+                    />
+                  </div>
+                </div>
+                <div class="settings-row-group floating ml1 slim" style="flex: 1;">
+                <label class="floating">PALETTE:</label>
+                  <i class="icons ${
+                    effectList[e].useFP ? 'active' : ''
+                  } fp fas fa-fw fa-swatchbook" style="margin-right: 0.5rem"></i>
                   ${
-                    globals.wledEffects && globals.wledEffects.length > 1
-                      ? `<select id='fxList' class='fx' value='${
-                          effectList[e].fx
+                    globals.wledPalettes && globals.wledPalettes.length > 1
+                      ? `<select id='fpList' style="flex:1; margin-right: 10px;" class='fp' value='${
+                          effectList[e].fp
                         }'>
-                      ${globals.wledEffects.map(
+                      ${globals.wledPalettes.map(
                         (e, i) => `
                       <option value='${i}'>${e}</option>
                       `
                       )}
                         
                       </select>`
-                      : `<input
-                        style='width: 60px;'
-                        class='fx'
-                        min='0'
-                        max='150'
-                        type='number'
-                        value='${effectList[e].fx}'
-                      />
+                      : `<input style="width: 60px;" class="fp" min="0" max="50" type="number" value="${effectList[
+                          e
+                        ].fp || 0}" />
                     `
                   }
-                </div>
-                <div>
-                  <i class="icons ${
-                    effectList[e].useSX ? 'active' : ''
-                  } sx ml1" style="margin-right: 0.5rem;">&#xe325;</i>
-                  <input
-                    class="fxSpeed"
-                    type="range"
-                    min="0"
-                    max="255"
-                    value="${effectList[e].fxSpeed}"
-                  />
-                </div>
-                <div>
-                  <i class="icons ${
-                    effectList[e].useIX ? 'active' : ''
-                  } ix ml1" style="margin-right: 0.5rem;">&#xe409;</i>
-                  <input
-                    class="ix"
-                    type="range"
-                    min="0"
-                    max="255"
-                    value="${effectList[e].ix}"
-                  />
+                  
                 </div>
               </div>
-              <div class="settings-row-group floating ml1" style="flex: 1;">
-              <label class="floating">PALETTE:</label>
-                <i class="icons ${
-                  effectList[e].useFP ? 'active' : ''
-                } fp" style="margin-right: 0.5rem">&#xe410;</i>
-                ${
-                  globals.wledPalettes && globals.wledPalettes.length > 1
-                    ? `<select id='fpList' style="flex:1; margin-right: 10px;" class='fp' value='${
-                        effectList[e].fp
-                      }'>
-                    ${globals.wledPalettes.map(
-                      (e, i) => `
-                    <option value='${i}'>${e}</option>
-                    `
-                    )}
-                      
-                    </select>`
-                    : `<input style="width: 60px;" class="fp" min="0" max="50" type="number" value="${effectList[e].fp}" />
-                  `
-                }
+              <div class="settings-row">
                 
+                </div>
               </div>
             </div>
-            <div class="settings-row">
-            <div class="settings-row-group floating" style="flex: 1">
-                <label class="floating">Extra:</label>
-                <i class="icons ${
-                  effectList[e].useEXTRA ? 'active' : ''
-                } extra" style="margin-right: 0.5rem">&#xe23d;</i>
-                <input class="extra " type="text"  value="${
-                  effectList[e].extra
-                }" style="flex: 1" />
-              </div>   
-            </div>
-          </div>
-        </div>
-          `
-    )
-    .join('');
+            `
+      )
+      .join('');
+  }
 };
-
 /* START Event-Handlers*/
 
 $('#inputIP').each((i, ele) => {
@@ -300,6 +345,8 @@ $(() => {
         const extra = $(e.currentTarget).hasClass('extra');
         const ix = $(e.currentTarget).hasClass('ix');
         const fp = $(e.currentTarget).hasClass('fp');
+        const nf = $(e.currentTarget).hasClass('nf');
+        const c3 = $(e.currentTarget).hasClass('c3');
         $(e.currentTarget).toggleClass('active');
         if (cl) {
           effectsyz[effectName].useCL = $(e.currentTarget).hasClass('active');
@@ -310,14 +357,17 @@ $(() => {
         if (c2) {
           effectsyz[effectName].useC2 = $(e.currentTarget).hasClass('active');
         }
+        if (c3) {
+          effectsyz[effectName].useC3 = $(e.currentTarget).hasClass('active');
+        }
         if (brightnessB) {
           effectsyz[effectName].useNT = $(e.currentTarget).hasClass('active');
         }
         if (nl) {
           effectsyz[effectName].useNL = $(e.currentTarget).hasClass('active');
         }
-        if (nl) {
-          effectsyz[effectName].useNL = $(e.currentTarget).hasClass('active');
+        if (nf) {
+          effectsyz[effectName].useNF = $(e.currentTarget).hasClass('active');
         }
         if (sx) {
           effectsyz[effectName].useSX = $(e.currentTarget).hasClass('active');
@@ -350,6 +400,8 @@ $(() => {
             $(element).removeClass('active');
           });
           setLastCheckedState();
+          renderEffectList(effectsyz);
+          changeHandlers();
         } else {
           if (isRunning) {
             timer2.stop();
@@ -358,14 +410,18 @@ $(() => {
               $(element).removeClass('active');
             });
             setLastCheckedState();
+            renderEffectList(effectsyz);
+            changeHandlers();
           }
-          timer2 = new CountDownTimer(timer);
-          $(el).addClass('active');
-          isRunning = true;
-          timer2
-            .onTick(format(display))
-            .onTick(checkExpired)
-            .start();
+          if (e.currentTarget.href.includes('&NL')) {
+            timer2 = new CountDownTimer(timer);
+            $(el).addClass('active');
+            isRunning = true;
+            timer2
+              .onTick(format(display))
+              .onTick(checkExpired)
+              .start();
+          }
         }
 
         function checkExpired() {
@@ -392,6 +448,7 @@ $(() => {
         if (confirmDelete === true) {
           delete effectsyz[effectName];
           renderEffectList(effectsyz);
+          changeHandlers();
         }
       });
       $(el).on('click', '.title .shareButton', e => {
@@ -406,6 +463,7 @@ $(() => {
           '_blank'
         );
         renderEffectList(effectsyz);
+        changeHandlers();
       });
 
       $(el).on('click', '.title .deleteButton', e => {
@@ -416,6 +474,7 @@ $(() => {
         if (confirmDelete === true) {
           delete effectsyz[effectName];
           renderEffectList(effectsyz);
+          changeHandlers();
         }
       });
 
@@ -499,6 +558,7 @@ $(() => {
       $('#inputIP').removeClass('and-dev');
     });
   };
+
   if (
     globals.wledEffects &&
     globals.wledEffects.length > 1 &&

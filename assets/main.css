@@ -315,8 +315,12 @@ button:hover {
   border: 2px solid #666;
   border-radius: 20px;
 }
+.settings-row-group.floating.slim {
+  padding: 0rem 0.7rem;
+}
 .mw205 {
-  min-width: 205px;
+  min-width: 110px;
+  margin-right: 10px;
 }
 .mw100 {
   min-width: 100%;
@@ -462,6 +466,11 @@ a:any-link {
   margin: 10px 0;
   align-items: center;
   justify-content: center;
+}
+input[type='range'].brightStart,
+input[type='range'].brightEnd,
+input[type='range'].bright3 {
+  width: 100px;
 }
 @media (max-width: 739px) {
   .container {
