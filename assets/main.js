@@ -61,7 +61,7 @@ const setURLonEffect = (effect, el) => {
     effectsyz[effect.name].useNT
       ? `&NT=${effectsyz[effect.name].brightnessEnd}`
       : ``
-  }${effectsyz[effect.name].useNF ? `&NT=${effectsyz[effect.name].nf}` : ``}${
+  }${effectsyz[effect.name].useNF ? `&NF=${effectsyz[effect.name].nf}` : ``}${
     effectsyz[effect.name].useFP ? `&FP=${effectsyz[effect.name].fp}` : ``
   }${effectsyz[effect.name].useIX ? `&IX=${effectsyz[effect.name].ix}` : ``}${
     effectsyz[effect.name].useEXTRA ? `${effectsyz[effect.name].extra}` : ``
@@ -142,7 +142,7 @@ const renderEffectList = (effectList, filterString) => {
                 <i class="icons ${
                   effectList[e].useC3 ? 'active' : ''
                 } c3" style="margin-right: 0.5rem">&#xe2b3;</i>
-                <input class="colorPickerTwo" type="color" value="#${effectList[
+                <input class="colorPickerThree" type="color" value="#${effectList[
                   e
                 ].c3 || '000000'}" />                
               </div>
@@ -503,6 +503,15 @@ $(() => {
           setURLonEffect(effectsyz[effectName], el);
         });
       });
+      $('.colorPickerThree', el).each((i, ele) => {
+        $(ele).on('input', e => {
+          const effectName = $('.title-url', el)[0].innerText.toLowerCase();
+          effectsyz[effectName].c3 = e.currentTarget.value
+            .replace('#', '')
+            .toUpperCase();
+          setURLonEffect(effectsyz[effectName], el);
+        });
+      });
       $('.brightStart', el).each((i, ele) => {
         $(ele).on('input', e => {
           const effectName = $('.title-url', el)[0].innerText.toLowerCase();
@@ -535,6 +544,13 @@ $(() => {
         $(ele).on('input', e => {
           const effectName = $('.title-url', el)[0].innerText.toLowerCase();
           effectsyz[effectName].fp = e.currentTarget.value;
+          setURLonEffect(effectsyz[effectName], el);
+        });
+      });
+      $('.nf', el).each((i, ele) => {
+        $(ele).on('input', e => {
+          const effectName = $('.title-url', el)[0].innerText.toLowerCase();
+          effectsyz[effectName].nf = e.currentTarget.value;
           setURLonEffect(effectsyz[effectName], el);
         });
       });

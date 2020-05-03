@@ -24,7 +24,7 @@ const effects = {
     useNT: true,
     useFP: false,
     useIX: false,
-    useNF: false,
+    useNF: true,
     useC3: false,
     useEXTRA: true
   }
