@@ -1,12 +1,12 @@
 function download(filename, text) {
-  const element = document.createElement("a");
+  const element = document.createElement('a');
   element.setAttribute(
-    "href",
-    "data:text/plain;charset=utf-8," + encodeURIComponent(text)
+    'href',
+    'data:text/plain;charset=utf-8,' + encodeURIComponent(text)
   );
-  element.setAttribute("download", filename);
+  element.setAttribute('download', filename);
 
-  element.style.display = "none";
+  element.style.display = 'none';
   document.body.appendChild(element);
 
   element.click();
@@ -63,7 +63,7 @@ CountDownTimer.prototype.stop = function() {
 };
 
 CountDownTimer.prototype.onTick = function(ftn) {
-  if (typeof ftn === "function") {
+  if (typeof ftn === 'function') {
     this.tickFtns.push(ftn);
   }
   return this;

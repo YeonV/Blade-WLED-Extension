@@ -6,10 +6,10 @@ const template = {
     ix: 128,
     fxSpeed: 128,
     nf: 2,
-    c3: '000000',
     extra: '',
     colorOne: 'FF0000',
     colorTwo: 'FFB14A',
+    colorThree: '000000',
     timeInMin: 10,
     brightnessStart: 5,
     brightnessEnd: 255,
@@ -24,7 +24,7 @@ const template = {
     useFP: true,
     useIX: true,
     useNF: true,
-    useC3: false,
+    useC3: true,
     useEXTRA: true
   }
 };
@@ -35,6 +35,7 @@ $('.dev').each((i, ele) => {
 });
 
 const setURLonEffect = (effect, el) => {
+  console.log('LookAtThatShiny', effect);
   effectsyz[effect.name].urlString = `http://${globals.ip}/win${
     effectsyz[effect.name].useFX ? `&FX=${effectsyz[effect.name].fx}` : ``
   }${
@@ -48,7 +49,9 @@ const setURLonEffect = (effect, el) => {
       ? `&C2=h00${effectsyz[effect.name].colorTwo}`
       : ``
   }${
-    effectsyz[effect.name].useC3 ? `&C3=h00${effectsyz[effect.name].c3}` : ``
+    effectsyz[effect.name].useC3
+      ? `&C3=h00${effectsyz[effect.name].colorThree}`
+      : ``
   }${
     effectsyz[effect.name].useA
       ? `&A=${effectsyz[effect.name].brightnessStart}`
@@ -144,7 +147,7 @@ const renderEffectList = (effectList, filterString) => {
                 } c3" style="margin-right: 0.5rem">&#xe2b3;</i>
                 <input class="colorPickerThree" type="color" value="#${effectList[
                   e
-                ].c3 || '000000'}" />                
+                ].colorThree || '000000'}" />                
               </div>
               <div class="settings-row-group floating" style="flex: 1">
                 <label class="floating">Extra:</label>
@@ -224,8 +227,10 @@ const renderEffectList = (effectList, filterString) => {
                             effectList[e].fx
                           }'>
                         ${globals.wledEffects.map(
-                          (e, i) => `
-                        <option value='${i}'>${e}</option>
+                          (ele, i) => `
+                        <option ${
+                          effectList[e].fx == i ? `selected="selected"` : ''
+                        } value='${i}'>${ele}</option>
                         `
                         )}
                           
@@ -277,8 +282,10 @@ const renderEffectList = (effectList, filterString) => {
                           effectList[e].fp
                         }'>
                       ${globals.wledPalettes.map(
-                        (e, i) => `
-                      <option value='${i}'>${e}</option>
+                        (ele, i) => `
+                      <option ${
+                        effectList[e].fp == i ? `selected="selected"` : ''
+                      } value='${i}'>${ele}</option>
                       `
                       )}
                         
@@ -323,6 +330,7 @@ $('#inputIP').each((i, ele) => {
 $(() => {
   getCurrentState();
   $('#inputIP')[0].value = globals.ip;
+
   const changeHandlers = () => {
     let timer2 = null;
     let isRunning = false;
@@ -506,7 +514,7 @@ $(() => {
       $('.colorPickerThree', el).each((i, ele) => {
         $(ele).on('input', e => {
           const effectName = $('.title-url', el)[0].innerText.toLowerCase();
-          effectsyz[effectName].c3 = e.currentTarget.value
+          effectsyz[effectName].colorThree = e.currentTarget.value
             .replace('#', '')
             .toUpperCase();
           setURLonEffect(effectsyz[effectName], el);
@@ -540,6 +548,7 @@ $(() => {
           setURLonEffect(effectsyz[effectName], el);
         });
       });
+
       $('.fp', el).each((i, ele) => {
         $(ele).on('input', e => {
           const effectName = $('.title-url', el)[0].innerText.toLowerCase();
@@ -601,11 +610,13 @@ $(() => {
           name: newName,
           colorOne: effectsyz[tempOldName].colorOne,
           colorTwo: effectsyz[tempOldName].colorTwo,
+          colorThree: effectsyz[tempOldName].colorThree,
           timeInMin: effectsyz[tempOldName].timeInMin,
           brightnessStart: effectsyz[tempOldName].brightnessStart,
           brightnessEnd: effectsyz[tempOldName].brightnessEnd,
           urlString: effectsyz[tempOldName].urlString,
           fx: effectsyz[tempOldName].fx,
+          fp: effectsyz[tempOldName].fp,
           fxSpeed: effectsyz[tempOldName].fxSpeed,
           extra: effectsyz[tempOldName].extra,
           useCL: effectsyz[tempOldName].useCL,
@@ -689,4 +700,10 @@ $(() => {
     );
   });
 });
+
+setTimeout(() => {
+  $('#fpList').each((element, index) => {
+    console.log(element);
+  });
+}, 500);
 /* END Event-Handlers*/
