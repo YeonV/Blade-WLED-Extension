@@ -1,4 +1,4 @@
-# Blade-WLED-Extension v0.6.1
+# Blade-WLED-Extension v0.6.2
 
 ![Image description](Blade-WLED-Extension.png)
 
