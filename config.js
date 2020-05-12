@@ -1,4 +1,4 @@
-const effects = {
+let defaultEffects = {
   sunrise: {
     name: 'sunrise',
     fx: 0,
@@ -29,7 +29,7 @@ const effects = {
     useEXTRA: true
   }
 };
-const globals = {
+let defaultGlobals = {
   ip: '192.168.1.186',
   wledPalettes: [
     'Default',
@@ -188,3 +188,43 @@ const globals = {
     'Heartbeat'
   ]
 };
+
+// const getState = async () => {
+//   return {effects, globals}
+// }
+
+
+
+let effects, globals;
+const getState = async () => {
+  return new Promise((resolve, reject) => {
+    if (effects && globals) {
+      resolve({ effects, globals });
+    }
+    chrome.storage.local.get(["effects", "globals"], function (result) {
+      if (result.effects.length > 0 && result.globals) {
+        effects = result.effects;
+        globals = result.globals;
+        resolve({ effects, globals });
+      console.log("DEV03 ", typeof effects, typeof globals);
+      } else {
+        chrome.storage.local.set(
+          {
+            effects: defaultEffects,
+            globals: defaultGlobals,
+          },
+          function () {
+            effects = defaultEffects;
+            globals = defaultGlobals;
+            console.log("YZ_03", {
+              effects: defaultEffects,
+              globals: defaultGlobals,
+            });
+            resolve({ effects: defaultEffects, globals: defaultGlobals });
+          }
+        );
+      }
+
+    });    
+  })
+}

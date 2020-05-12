@@ -1,4 +1,4 @@
-function download(filename, text) {
+ function download(filename, text) {
   const element = document.createElement('a');
   element.setAttribute(
     'href',

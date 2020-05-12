@@ -1,6 +1,6 @@
 let currentState = {};
 
-const getCurrentState = () => {
+window.getCurrentState = () => {
   $.getJSON(
     `http://${globals.ip}/json/state`,
     function(data) {
@@ -18,26 +18,28 @@ const getCurrentState = () => {
   );
 };
 
-const getEffectList = () => {
+window.getEffectList = () => {
   $.getJSON(`http://${globals.ip}/json/effect`, function(data) {
     globals.wledEffects = data;
     // console.log('Got Effects:', globals.wledEffects);
   });
 };
-const getPaletteList = () => {
+window.getPaletteList = () => {
   $.getJSON(`http://${globals.ip}/json/palette`, function(data) {
     globals.wledPalettes = data;
     // console.log('Got Palettes:', globals.wledPalettes);
   });
 };
-getEffectList();
-getPaletteList();
+setTimeout(() => {
+  getEffectList();
+  getPaletteList();
+}, 200);
 
-const setLastCheckedState = () => {
+window.setLastCheckedState = () => {
   // console.log('Setting Last Current State');
   setState(currentState);
 };
-const setState = state => {
+window.setState = state => {
   // console.log('Setting State:', state);
   $.ajax({
     type: 'POST',
