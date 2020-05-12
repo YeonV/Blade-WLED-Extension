@@ -14,6 +14,7 @@ if (document.cookie.split(';').some(item => item.trim().startsWith('ip='))) {
 }
 console.log('YZ Using IP: ', ip);
 document.querySelector('body').classList.add('yz');
+
 var anchors = document.querySelectorAll('article');
 for (let z = 0; z < anchors.length; z++) {
   let elem = anchors[z];

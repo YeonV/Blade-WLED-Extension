@@ -30,9 +30,12 @@ const template = {
 };
 const effectsyz = {...template, ...effects};
 
-$('.dev').each((i, ele) => {
-  $(ele).hide();
-});
+const hideDev = () => {
+  $('.dev').each((i, ele) => {
+    $(ele).hide();
+  });
+};
+hideDev();
 
 const setURLonEffect = (effect, el) => {
   console.log('LookAtThatShiny', effect);
@@ -309,24 +312,26 @@ const renderEffectList = (effectList, filterString) => {
   }
 };
 /* START Event-Handlers*/
-
-$('#inputIP').each((i, ele) => {
-  $(ele).focusout(() => {
-    getCurrentState();
-  });
-  $(ele).keypress(e => {
-    if (e.which === 13) {
-      $(ele).blur();
-    }
-  });
-  $(ele).on('input', e => {
-    globals.ip = e.currentTarget.value;
-    $('#effectlist .effect').each((i, element) => {
-      const effectName = $('.title-url', element)[0].innerText.toLowerCase();
-      setURLonEffect(effectsyz[effectName], element);
+const handleInputIP = () => {
+  $('#inputIP').each((i, ele) => {
+    $(ele).focusout(() => {
+      getCurrentState();
+    });
+    $(ele).keypress(e => {
+      if (e.which === 13) {
+        $(ele).blur();
+      }
+    });
+    $(ele).on('input', e => {
+      globals.ip = e.currentTarget.value;
+      $('#effectlist .effect').each((i, element) => {
+        const effectName = $('.title-url', element)[0].innerText.toLowerCase();
+        setURLonEffect(effectsyz[effectName], element);
+      });
     });
   });
-});
+};
+handleInputIP();
 $(() => {
   getCurrentState();
   $('#inputIP')[0].value = globals.ip;
@@ -701,9 +706,4 @@ $(() => {
   });
 });
 
-setTimeout(() => {
-  $('#fpList').each((element, index) => {
-    console.log(element);
-  });
-}, 500);
 /* END Event-Handlers*/
