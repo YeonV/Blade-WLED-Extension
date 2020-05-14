@@ -1,3 +1,5 @@
+## Deprecated soon... https://github.com/YeonV/Blade-WLED-Extension-React
+
 # Blade-WLED-Extension v0.6.2
 
 ![Image description](Blade-WLED-Extension.png)
